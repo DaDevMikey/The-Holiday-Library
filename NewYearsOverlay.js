@@ -14,6 +14,7 @@
           interval: 1000, // Fireworks interval in milliseconds
           zIndex: 9999,
           toggleButton: null, // Selector for a toggle button
+          timeout: null, // Auto-stop timeout in milliseconds (null = no timeout)
         };
         this.settings = { ...this.defaults, ...options };
         this.init();
@@ -110,7 +111,12 @@
         if (this.running) return;
         this.running = true;
         this.fireworksInterval = setInterval(() => this.createFirework(), this.settings.interval);
-  
+
+        // Set timeout to auto-stop if specified
+        if (this.settings.timeout !== null && this.settings.timeout > 0) {
+          this.timeoutId = setTimeout(() => this.stopAnimation(), this.settings.timeout);
+        }
+
         const animate = () => {
           if (!this.running) return;
           this.updateFireworks();
@@ -123,6 +129,8 @@
       stopAnimation() {
         this.running = false;
         clearInterval(this.fireworksInterval);
+        clearTimeout(this.timeoutId);
+        this.timeoutId = null;
         cancelAnimationFrame(this.animationFrame);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       }
