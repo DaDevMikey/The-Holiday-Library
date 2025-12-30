@@ -28,9 +28,19 @@
         this.init();
       }
 
+      isValidTimeFormat(time) {
+        if (typeof time !== 'string') return false;
+        const match = time.match(/^(\d{1,2}):(\d{2})$/);
+        if (!match) return false;
+        const hours = parseInt(match[1], 10);
+        const mins = parseInt(match[2], 10);
+        return hours >= 0 && hours <= 23 && mins >= 0 && mins <= 59;
+      }
+
       isWithinSchedule() {
         const { startTime, endTime } = this.settings;
         if (!startTime || !endTime) return true;
+        if (!this.isValidTimeFormat(startTime) || !this.isValidTimeFormat(endTime)) return true;
         
         const now = new Date();
         const currentMinutes = now.getHours() * 60 + now.getMinutes();
@@ -201,6 +211,10 @@
       }
 
       adjustBrightness(color, percent) {
+        // Validate hex color format
+        if (typeof color !== 'string' || !color.match(/^#[0-9A-Fa-f]{6}$/)) {
+          return color; // Return original color if not valid hex
+        }
         const num = parseInt(color.replace('#', ''), 16);
         const amt = Math.round(2.55 * percent);
         const R = Math.min(255, Math.max(0, (num >> 16) + amt));

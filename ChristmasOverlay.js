@@ -14,8 +14,18 @@
 
     let schedulerInterval = null;
 
+    const isValidTimeFormat = (time) => {
+      if (typeof time !== 'string') return false;
+      const match = time.match(/^(\d{1,2}):(\d{2})$/);
+      if (!match) return false;
+      const hours = parseInt(match[1], 10);
+      const mins = parseInt(match[2], 10);
+      return hours >= 0 && hours <= 23 && mins >= 0 && mins <= 59;
+    };
+
     const isWithinSchedule = (startTime, endTime) => {
       if (!startTime || !endTime) return true;
+      if (!isValidTimeFormat(startTime) || !isValidTimeFormat(endTime)) return true;
       
       const now = new Date();
       const currentMinutes = now.getHours() * 60 + now.getMinutes();
