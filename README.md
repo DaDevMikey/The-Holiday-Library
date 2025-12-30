@@ -74,6 +74,7 @@ const fireworks = new FireworksOverlay({
   interval: 500,                             // Time between fireworks in ms (default: 1000)
   zIndex: 10000,                             // Z-index of the overlay (default: 9999)
   toggleButton: '#toggleFireworks',          // Button selector to toggle the overlay (optional)
+  timeout: 30000,                            // Auto-stop timeout in ms (default: null, no timeout)
 });
 ```
 
