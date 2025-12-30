@@ -1,224 +1,418 @@
-<html><head><base href="https://155601-mikey.github.io/">
-<title>Holiday Library Examples</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="." />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Holiday Library - Festive Web Overlays</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
-/* Special overlay effects */
-#snowContainer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
+:root {
+    --md-sys-color-primary: #93CCFF;
+    --md-sys-color-surface: #1a1c1e;
+    --md-sys-color-on-surface: #e2e2e5;
+    --md-sys-color-surface-variant: #42474d;
+    --md-elevation-level-1: 0 2px 4px rgba(0,0,0,.2);
+    --md-elevation-level-2: 0 4px 8px rgba(0,0,0,.4);
 }
 
-#fireworksContainer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system;
 }
 
-/* Basic styles */
 body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: 'Arial', sans-serif;
-  background: #001a33;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
+    background: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    line-height: 1.6;
 }
 
-.container {
-  max-width: 800px;
-  width: 100%;
-  text-align: center;
+.hero {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
 }
 
-h1 {
-  color: #4da6ff;
-  font-size: 2.5em;
-  margin-bottom: 30px;
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, var(--md-sys-color-primary), #ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% { filter: brightness(100%); }
+    50% { filter: brightness(130%); }
+}
+
+.hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin-bottom: 2rem;
+    opacity: 0.9;
 }
 
 .demo-section {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  padding: 20px;
-  margin: 20px 0;
+    padding: 4rem 2rem;
+    background: var(--md-sys-color-surface-variant);
 }
 
-.button {
-  background: #4da6ff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin: 10px;
-  transition: transform 0.2s;
-}
-
-.button.enable {
-  background: #4CAF50;
-}
-
-.button.disable {
-  background: #f44336;
-}
-
-.button:hover {
-  transform: scale(1.05);
-}
-
-.button:active {
-  transform: scale(0.95);
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .code-block {
-  background: rgba(0, 0, 0, 0.3);
-  padding: 20px;
-  border-radius: 5px;
-  text-align: left;
-  margin: 20px 0;
-  position: relative;
+    background: #000000;
+    color: #fff;
+    padding: 1.5rem;
+    border-radius: 16px;
+    margin: 1rem 0;
+    overflow-x: auto;
+    white-space: pre;
+    font-family: monospace;
+    box-shadow: var(--md-elevation-level-1);
+    transition: box-shadow 0.3s ease;
 }
 
-.copy-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #4da6ff;
-  border: none;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 3px;
-  cursor: pointer;
+.code-block:hover {
+    box-shadow: var(--md-elevation-level-2);
 }
 
-pre {
-  margin: 0;
-  white-space: pre-wrap;
-  font-family: monospace;
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 1rem 2rem;
+    background: var(--md-sys-color-primary);
+    color: #000000;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
 }
 
-.effects-container {
-  margin-top: 20px;
+.btn .material-icons {
+    font-size: 20px;
 }
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--md-elevation-level-2);
+}
+
+.btn.active {
+    background: #4CAF50;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 4rem 0;
+}
+
+.feature-card {
+    background: var(--md-sys-color-surface);
+    padding: 2rem;
+    border-radius: 24px;
+    box-shadow: var(--md-elevation-level-1);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--md-elevation-level-2);
+}
+
+.feature-card .material-icons {
+    font-size: 48px;
+    color: var(--md-sys-color-primary);
+    margin-bottom: 1rem;
+}
+
+.api-section {
+    padding: 4rem 2rem;
+    background: var(--md-sys-color-surface);
+}
+
+.api-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.api-card {
+    background: var(--md-sys-color-surface-variant);
+    padding: 2rem;
+    border-radius: 24px;
+    box-shadow: var(--md-elevation-level-1);
+    transition: all 0.3s ease;
+}
+
+.api-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--md-elevation-level-2);
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.coming-soon {
+    position: relative;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.coming-soon::after {
+    content: 'Coming Soon';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--md-sys-color-surface-variant);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.status-indicator {
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
+}
+
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>Holiday Library Examples</h1>
-  <button id="viewSourceCode" href="https://github.com/DaDevMikey/The-Holiday-Library/">View Source code</button>
-  
-  <div class="demo-section">
-    <h2>Christmas Snow Effect</h2>
-    <button id="snowEnable" class="button enable">Enable Snow</button>
-    <button id="snowDisable" class="button disable">Disable Snow</button>
-    <div class="code-block">
-      <button class="copy-button" onclick="copyCode(this)">Copy Code</button>
-      <pre>
-// Add to your HTML
-&lt;script src="https://dadevmikey.github.io/The-Holiday-Library/ChristmasOverlay.js">&lt;/script>
+    <div class="hero">
+        <h1>The Holiday Library</h1>
+        <p>Add festive cheer to your website with simple, lightweight holiday overlays</p>
+        
+        <div class="controls">
+            <button id="toggleSnow" class="btn">
+                <i class="material-icons">ac_unit</i>
+                <span>Enable Snow</span>
+            </button>
+            <button id="toggleFireworks" class="btn">
+                <i class="material-icons">celebration</i>
+                <span>Enable Fireworks</span>
+            </button>
+            <button class="btn coming-soon" disabled>
+                <i class="material-icons">pest_control</i>
+                Halloween Effect
+            </button>
+        </div>
 
-// JavaScript
+        <div class="status-indicator" id="statusIndicator">
+            Click a button above to see the effects!
+        </div>
+
+        <a href="https://github.com/DaDevMikey/The-Holiday-Library" class="btn" style="margin-top: 2rem;">
+            <i class="material-icons">code</i>
+            View on GitHub
+        </a>
+    </div>
+
+    <section class="demo-section">
+        <div class="container">
+            <h2>Quick Start</h2>
+            <div class="code-block">
+<code>// Add to your HTML
+&lt;script src="https://dadevmikey.github.io/The-Holiday-Library/ChristmasOverlay.js"&gt;&lt;/script&gt;
+&lt;script src="https://dadevmikey.github.io/The-Holiday-Library/NewYearsOverlay.js"&gt;&lt;/script&gt;
+
+// Enable snow effect
 christmasOverlaySnow.enable({
-  snowflakeCount: 100,
-  snowflakeColor: 'white',
-  zIndex: 9999
-});</pre>
-    </div>
-  </div>
+    snowflakeCount: 100,
+    snowflakeColor: 'white',
+    zIndex: 99999
+});
 
-  <div class="demo-section">
-    <h2>New Year's Fireworks Effect</h2>
-    <button id="fireworksEnable" class="button enable">Enable Fireworks</button>
-    <button id="fireworksDisable" class="button disable">Disable Fireworks</button>
-    <div class="code-block">
-      <button class="copy-button" onclick="copyCode(this)">Copy Code</button>
-      <pre>
-// Add to your HTML
-&lt;script src="https://dadevmikey.github.io/The-Holiday-Library/NewYearsOverlay.js">&lt;/script>
+// Enable fireworks effect
+const fireworks = new FireworksOverlay();
+fireworks.startAnimation();
 
-// JavaScript
+// Time-based scheduling (NEW!)
+christmasOverlaySnow.enable({
+    startTime: '18:00',  // 6 PM
+    endTime: '23:59'     // Midnight
+});
+
 const fireworks = new FireworksOverlay({
-  colors: ['#FF0000', '#00FF00', '#0000FF'],
-  particleCount: 100,
-  interval: 500
+    startTime: '23:00',  // 11 PM
+    endTime: '01:00'     // 1 AM (overnight)
 });
-fireworks.startAnimation();</pre>
-    </div>
-  </div>
-</div>
+fireworks.startAnimation();</code>
+            </div>
 
-<div id="snowContainer"></div>
-<div id="fireworksContainer"></div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <i class="material-icons">speed</i>
+                    <h3>Lightweight</h3>
+                    <p>Minimal impact on page load times</p>
+                </div>
+                <div class="feature-card">
+                    <i class="material-icons">palette</i>
+                    <h3>Customizable</h3>
+                    <p>Adjust effects to match your site</p>
+                </div>
+                <div class="feature-card">
+                    <i class="material-icons">code</i>
+                    <h3>Easy to Use</h3>
+                    <p>Simple implementation with one line of code</p>
+                </div>
+                <div class="feature-card">
+                    <i class="material-icons">schedule</i>
+                    <h3>Time-Based</h3>
+                    <p>Schedule effects based on user's local time</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- Load libraries -->
-<script src="https://dadevmikey.github.io/The-Holiday-Library/ChristmasOverlay.js"></script>
-<script src="https://dadevmikey.github.io/The-Holiday-Library/NewYearsOverlay.js"></script>
-
-<script>
-let fireworksInstance;
-
-// Wait for libraries to load
-window.addEventListener('load', () => {
-  // Initialize fireworks instance
-  fireworksInstance = new FireworksOverlay({
-    colors: ['#FF0000', '#00FF00', '#0000FF'],
-    particleCount: 100,
-    interval: 500,
-    zIndex: 9999
-  });
-
-  // Snow enable button
-  document.getElementById('snowEnable').addEventListener('click', () => {
-    christmasOverlaySnow.enable({
-      snowflakeCount: 100,
-      snowflakeColor: 'white',
-      zIndex: 9999
-    });
-  });
-
-  // Snow disable button
-  document.getElementById('snowDisable').addEventListener('click', () => {
-    christmasOverlaySnow.disable();
-  });
-
-  // Fireworks enable button
-  document.getElementById('fireworksEnable').addEventListener('click', () => {
-    fireworksInstance.startAnimation();
-  });
-
-  // Fireworks disable button
-  document.getElementById('fireworksDisable').addEventListener('click', () => {
-    fireworksInstance.stopAnimation();
-  });
+    <section class="api-section">
+        <div class="container">
+            <h2>API Documentation</h2>
+            <div class="api-grid">
+                <div class="api-card">
+                    <h3>Snow - Enable</h3>
+                    <div class="code-block">
+<code>christmasOverlaySnow.enable();</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Snow - Disable</h3>
+                    <div class="code-block">
+<code>christmasOverlaySnow.disable();</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Fireworks - Start</h3>
+                    <div class="code-block">
+<code>const fw = new FireworksOverlay();
+fw.startAnimation();</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Fireworks - Stop</h3>
+                    <div class="code-block">
+<code>fw.stopAnimation();</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Snow - Time Scheduled</h3>
+                    <div class="code-block">
+<code>christmasOverlaySnow.enable({
+    startTime: '18:00',
+    endTime: '23:59'
+});</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Fireworks - Time Scheduled</h3>
+                    <div class="code-block">
+<code>const fw = new FireworksOverlay({
+    startTime: '23:00',
+    endTime: '01:00'
 });
+fw.startAnimation();</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-// Code copy function
-function copyCode(button) {
-  const codeBlock = button.nextElementSibling;
-  const textArea = document.createElement('textarea');
-  textArea.value = codeBlock.textContent;
-  document.body.appendChild(textArea);
-  textArea.select();
-  document.execCommand('copy');
-  document.body.removeChild(textArea);
-  
-  const originalText = button.textContent;
-  button.textContent = 'Copied!';
-  setTimeout(() => {
-    button.textContent = originalText;
-  }, 2000);
-}
-</script>
-</body></html>
+    <!-- Load the overlay scripts locally for demo -->
+    <script src="ChristmasOverlay.js"></script>
+    <script src="NewYearsOverlay.js"></script>
+
+    <script>
+        let fireworksInstance = null;
+        let snowActive = false;
+        let fireworksActive = false;
+
+        // Snow toggle
+        document.getElementById('toggleSnow').addEventListener('click', function() {
+            if (snowActive) {
+                christmasOverlaySnow.disable();
+                this.querySelector('span').textContent = 'Enable Snow';
+                this.classList.remove('active');
+                snowActive = false;
+            } else {
+                christmasOverlaySnow.enable({
+                    snowflakeCount: 80,
+                    snowflakeColor: 'white',
+                    zIndex: 9999
+                });
+                this.querySelector('span').textContent = 'Disable Snow';
+                this.classList.add('active');
+                snowActive = true;
+            }
+            updateStatus();
+        });
+
+        // Fireworks toggle
+        document.getElementById('toggleFireworks').addEventListener('click', function() {
+            if (!fireworksInstance) {
+                fireworksInstance = new FireworksOverlay({
+                    colors: ['#FF5733', '#FFC300', '#DAF7A6', '#C70039', '#FFD700', '#FF69B4', '#00FFFF'],
+                    particleCount: 80,
+                    interval: 800,
+                    zIndex: 9998
+                });
+            }
+            
+            if (fireworksActive) {
+                fireworksInstance.stopAnimation();
+                this.querySelector('span').textContent = 'Enable Fireworks';
+                this.classList.remove('active');
+                fireworksActive = false;
+            } else {
+                fireworksInstance.startAnimation();
+                this.querySelector('span').textContent = 'Disable Fireworks';
+                this.classList.add('active');
+                fireworksActive = true;
+            }
+            updateStatus();
+        });
+
+        function updateStatus() {
+            const status = document.getElementById('statusIndicator');
+            const activeEffects = [];
+            if (snowActive) activeEffects.push('❄️ Snow');
+            if (fireworksActive) activeEffects.push('🎆 Fireworks');
+            
+            if (activeEffects.length > 0) {
+                status.textContent = 'Active: ' + activeEffects.join(' • ');
+            } else {
+                status.textContent = 'Click a button above to see the effects!';
+            }
+        }
+    </script>
+</body>
+</html>
