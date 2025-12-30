@@ -1,7 +1,10 @@
-<html><head><base href="." />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="." />
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>The Holiday Library - Festive Web Overlays</title>
+<title>New Year's Fireworks Overlay Demo - The Holiday Library</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
@@ -112,31 +115,16 @@ body {
     box-shadow: var(--md-elevation-level-2);
 }
 
-.feature-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin: 4rem 0;
+.btn.active {
+    background: #4CAF50;
 }
 
-.feature-card {
-    background: var(--md-sys-color-surface);
-    padding: 2rem;
-    border-radius: 24px;
-    box-shadow: var(--md-elevation-level-1);
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--md-elevation-level-2);
-}
-
-.feature-card .material-icons {
-    font-size: 48px;
-    color: var(--md-sys-color-primary);
-    margin-bottom: 1rem;
+.controls {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .api-section {
@@ -164,62 +152,42 @@ body {
     box-shadow: var(--md-elevation-level-2);
 }
 
-.controls {
-    display: flex;
-    gap: 1rem;
-    margin: 2rem 0;
-    justify-content: center;
-    flex-wrap: wrap;
+.status-indicator {
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
 }
 
-.coming-soon {
-    position: relative;
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-.coming-soon::after {
-    content: 'Coming Soon';
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--md-sys-color-surface-variant);
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    white-space: nowrap;
-}
 </style>
 </head>
 <body>
     <div class="hero">
-        <h1>The Holiday Library</h1>
-        <p>Add festive cheer to your website with simple, lightweight holiday overlays</p>
+        <h1>🎆 New Year's Fireworks</h1>
+        <p>Realistic fireworks with rocket trails, colorful explosions, sparkle effects, and particle physics</p>
         
         <div class="controls">
-            <a href="https://155601-mikey.github.io/The-Holiday-Library/christmasoverlay.html" class="btn">
-                <i class="material-icons">ac_unit</i>
-                Christmas Overlay
-            </a>
-            <button id="disableFireworks" class="btn">
-                <i class="material-icons">close</i>
-                Disable Fireworks
-            </button>
-            <button id="enableFireworks" class="btn">
+            <button id="toggleFireworks" class="btn">
                 <i class="material-icons">celebration</i>
-                Enable Fireworks
-            </button>
-            <button class="btn coming-soon" disabled>
-                <i class="material-icons">spider</i>
-                Halloween Effect
+                <span>Enable Fireworks</span>
             </button>
         </div>
 
-        <a href="https://github.com/155601-Mikey/The-Holiday-Library" class="btn" style="margin-top: 2rem;">
-            <i class="material-icons">code</i>
-            View on GitHub
-        </a>
+        <div class="status-indicator" id="statusIndicator">
+            Click the button above to see the fireworks!
+        </div>
+
+        <div class="controls">
+            <a href="index.html" class="btn">
+                <i class="material-icons">home</i>
+                Back to Home
+            </a>
+            <a href="https://github.com/DaDevMikey/The-Holiday-Library" class="btn">
+                <i class="material-icons">code</i>
+                View on GitHub
+            </a>
+        </div>
     </div>
 
     <section class="demo-section">
@@ -227,83 +195,108 @@ body {
             <h2>Quick Start</h2>
             <div class="code-block">
 <code>// Add to your HTML
-&lt;script src="https://155601-mikey.github.io/The-Holiday-Library/NewYearsOverlay.js"&gt;&lt;/script&gt;
+&lt;script src="https://dadevmikey.github.io/The-Holiday-Library/NewYearsOverlay.js"&gt;&lt;/script&gt;
 
-// Initialize with default settings
+// Initialize and start fireworks
 const fireworks = new FireworksOverlay();
 fireworks.startAnimation();
 
-// Or with custom options
+// Or customize it
 const fireworks = new FireworksOverlay({
-    colors: ['#FF0000', '#00FF00', '#0000FF'],
+    colors: ['#FF0000', '#00FF00', '#0000FF', '#FFD700'],
     particleCount: 100,
-    gravity: 0.05,
-    speed: { min: 3, max: 8 },
-    radius: { min: 2, max: 5 },
     interval: 500,
-    zIndex: 10000,
-    timeout: 30000  // Auto-stop after 30 seconds
-});</code>
-            </div>
+    trailLength: 5,
+    sparkle: true,
+    rocketTrail: true
+});
+fireworks.startAnimation();
 
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <i class="material-icons">speed</i>
-                    <h3>Lightweight</h3>
-                    <p>Minimal impact on page load times</p>
-                </div>
-                <div class="feature-card">
-                    <i class="material-icons">palette</i>
-                    <h3>Customizable</h3>
-                    <p>Adjust effects to match your site</p>
-                </div>
-                <div class="feature-card">
-                    <i class="material-icons">code</i>
-                    <h3>Easy to Use</h3>
-                    <p>Simple implementation with one line of code</p>
-                </div>
+// Stop fireworks
+fireworks.stopAnimation();</code>
             </div>
         </div>
     </section>
 
     <section class="api-section">
         <div class="container">
-            <h2>API Documentation</h2>
+            <h2>API Options</h2>
             <div class="api-grid">
                 <div class="api-card">
-                    <h3>Start Animation</h3>
+                    <h3>Basic Usage</h3>
                     <div class="code-block">
-<code>fireworks.startAnimation();</code>
+<code>const fw = new FireworksOverlay();
+fw.startAnimation();
+fw.stopAnimation();
+fw.toggle();</code>
                     </div>
                 </div>
                 <div class="api-card">
-                    <h3>Stop Animation</h3>
+                    <h3>Visual Options</h3>
                     <div class="code-block">
-<code>fireworks.stopAnimation();</code>
+<code>new FireworksOverlay({
+    colors: ['#FF0000', '#FFD700'],
+    particleCount: 100,
+    trailLength: 5,
+    sparkle: true,
+    rocketTrail: true
+});</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Time-Based Scheduling</h3>
+                    <div class="code-block">
+<code>const fw = new FireworksOverlay({
+    startTime: '23:00',
+    endTime: '01:00'
+});
+fw.startAnimation();</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Auto-Stop Timeout</h3>
+                    <div class="code-block">
+<code>new FireworksOverlay({
+    timeout: 30000 // 30 seconds
+});</code>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <script>
-        // Load the New Years overlay script
-        const script = document.createElement('script');
-        script.src = "https://155601-mikey.github.io/The-Holiday-Library/NewYearsOverlay.js";
-        document.head.appendChild(script);
+    <!-- Load the overlay script locally -->
+    <script src="NewYearsOverlay.js"></script>
 
-        // Wait for script to load before adding event listeners
-        script.onload = function() {
-            const fireworks = new FireworksOverlay();
+    <script>
+        let fireworksInstance = null;
+        let fireworksActive = false;
+
+        // Fireworks toggle
+        document.getElementById('toggleFireworks').addEventListener('click', function() {
+            if (!fireworksInstance) {
+                fireworksInstance = new FireworksOverlay({
+                    colors: ['#FF5733', '#FFC300', '#DAF7A6', '#C70039', '#FFD700', '#FF69B4', '#00FFFF'],
+                    particleCount: 80,
+                    interval: 800,
+                    zIndex: 9999
+                });
+            }
             
-            document.getElementById('enableFireworks').addEventListener('click', function() {
-                fireworks.startAnimation();
-            });
-            
-            document.getElementById('disableFireworks').addEventListener('click', function() {
-                fireworks.stopAnimation();
-            });
-        };
+            if (fireworksActive) {
+                fireworksInstance.stopAnimation();
+                this.querySelector('span').textContent = 'Enable Fireworks';
+                this.classList.remove('active');
+                fireworksActive = false;
+                document.getElementById('statusIndicator').textContent = 'Click the button above to see the fireworks!';
+            } else {
+                fireworksInstance.startAnimation();
+                this.querySelector('span').textContent = 'Disable Fireworks';
+                this.classList.add('active');
+                fireworksActive = true;
+                document.getElementById('statusIndicator').textContent = '🎆 Fireworks are launching!';
+            }
+        });
     </script>
 </body>
 </html>
