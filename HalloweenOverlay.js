@@ -60,6 +60,7 @@
         this.schedulerInterval = null;
         this.lightningTimeout = null;
         this.lightningFlash = false;
+        this.resizeHandler = () => this.resizeCanvas();
         this.init();
       }
 
@@ -149,7 +150,7 @@
       }
   
       bindResize() {
-        window.addEventListener('resize', () => this.resizeCanvas());
+        window.addEventListener('resize', this.resizeHandler);
       }
   
       bindToggleButton() {
@@ -684,7 +685,7 @@
       destroy() {
         this.stopAnimation();
         this.canvas.remove();
-        window.removeEventListener('resize', this.resizeCanvas);
+        window.removeEventListener('resize', this.resizeHandler);
       }
     }
 
