@@ -222,9 +222,9 @@ body {
                 <i class="material-icons">celebration</i>
                 <span>Enable Fireworks</span>
             </button>
-            <button class="btn coming-soon" disabled>
+            <button id="toggleHalloween" class="btn">
                 <i class="material-icons">pest_control</i>
-                Halloween Effect
+                <span>Enable Halloween</span>
             </button>
         </div>
 
@@ -245,6 +245,7 @@ body {
 <code>// Add to your HTML
 &lt;script src="https://dadevmikey.github.io/The-Holiday-Library/ChristmasOverlay.js"&gt;&lt;/script&gt;
 &lt;script src="https://dadevmikey.github.io/The-Holiday-Library/NewYearsOverlay.js"&gt;&lt;/script&gt;
+&lt;script src="https://dadevmikey.github.io/The-Holiday-Library/HalloweenOverlay.js"&gt;&lt;/script&gt;
 
 // Enable snow effect
 christmasOverlaySnow.enable({
@@ -257,6 +258,10 @@ christmasOverlaySnow.enable({
 const fireworks = new FireworksOverlay();
 fireworks.startAnimation();
 
+// Enable Halloween effects
+const halloween = new HalloweenOverlay();
+halloween.startAnimation();
+
 // Time-based scheduling (NEW!)
 christmasOverlaySnow.enable({
     startTime: '18:00',  // 6 PM
@@ -267,7 +272,13 @@ const fireworks = new FireworksOverlay({
     startTime: '23:00',  // 11 PM
     endTime: '01:00'     // 1 AM (overnight)
 });
-fireworks.startAnimation();</code>
+fireworks.startAnimation();
+
+const halloween = new HalloweenOverlay({
+    dateStart: '10-25',  // Oct 25
+    dateEnd: '11-01'     // Nov 1
+});
+halloween.startAnimation();</code>
             </div>
 
             <div class="feature-grid">
@@ -343,6 +354,29 @@ fw.startAnimation();</code>
 fw.startAnimation();</code>
                     </div>
                 </div>
+                <div class="api-card">
+                    <h3>Halloween - Start</h3>
+                    <div class="code-block">
+<code>const hw = new HalloweenOverlay();
+hw.startAnimation();</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Halloween - Stop</h3>
+                    <div class="code-block">
+<code>hw.stopAnimation();</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Halloween - Date Scheduled</h3>
+                    <div class="code-block">
+<code>const hw = new HalloweenOverlay({
+    dateStart: '10-25',
+    dateEnd: '11-01'
+});
+hw.startAnimation();</code>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -350,11 +384,14 @@ fw.startAnimation();</code>
     <!-- Load the overlay scripts locally for demo -->
     <script src="ChristmasOverlay.js"></script>
     <script src="NewYearsOverlay.js"></script>
+    <script src="HalloweenOverlay.js"></script>
 
     <script>
         let fireworksInstance = null;
+        let halloweenInstance = null;
         let snowActive = false;
         let fireworksActive = false;
+        let halloweenActive = false;
 
         // Snow toggle
         document.getElementById('toggleSnow').addEventListener('click', function() {
@@ -401,11 +438,42 @@ fw.startAnimation();</code>
             updateStatus();
         });
 
+        // Halloween toggle
+        document.getElementById('toggleHalloween').addEventListener('click', function() {
+            if (!halloweenInstance) {
+                halloweenInstance = new HalloweenOverlay({
+                    pumpkinCount: 5,
+                    batCount: 8,
+                    ghostCount: 6,
+                    leafCount: 15,
+                    spiderCount: 3,
+                    enableLightning: true,
+                    enableFog: true,
+                    enableSpiders: true,
+                    zIndex: 9997
+                });
+            }
+            
+            if (halloweenActive) {
+                halloweenInstance.stopAnimation();
+                this.querySelector('span').textContent = 'Enable Halloween';
+                this.classList.remove('active');
+                halloweenActive = false;
+            } else {
+                halloweenInstance.startAnimation();
+                this.querySelector('span').textContent = 'Disable Halloween';
+                this.classList.add('active');
+                halloweenActive = true;
+            }
+            updateStatus();
+        });
+
         function updateStatus() {
             const status = document.getElementById('statusIndicator');
             const activeEffects = [];
             if (snowActive) activeEffects.push('❄️ Snow');
             if (fireworksActive) activeEffects.push('🎆 Fireworks');
+            if (halloweenActive) activeEffects.push('🎃 Halloween');
             
             if (activeEffects.length > 0) {
                 status.textContent = 'Active: ' + activeEffects.join(' • ');
