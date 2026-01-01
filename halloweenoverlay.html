@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="." />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Halloween Spooky Overlay Demo - The Holiday Library</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+:root {
+    --md-sys-color-primary: #FF6B1A;
+    --md-sys-color-surface: #1a1c1e;
+    --md-sys-color-on-surface: #e2e2e5;
+    --md-sys-color-surface-variant: #42474d;
+    --md-elevation-level-1: 0 2px 4px rgba(0,0,0,.2);
+    --md-elevation-level-2: 0 4px 8px rgba(0,0,0,.4);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system;
+}
+
+body {
+    background: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    line-height: 1.6;
+}
+
+.hero {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, var(--md-sys-color-primary), #FFA500);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% { filter: brightness(100%); }
+    50% { filter: brightness(130%); }
+}
+
+.hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.demo-section {
+    padding: 4rem 2rem;
+    background: var(--md-sys-color-surface-variant);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.code-block {
+    background: #000000;
+    color: #fff;
+    padding: 1.5rem;
+    border-radius: 16px;
+    margin: 1rem 0;
+    overflow-x: auto;
+    white-space: pre;
+    font-family: monospace;
+    box-shadow: var(--md-elevation-level-1);
+    transition: box-shadow 0.3s ease;
+}
+
+.code-block:hover {
+    box-shadow: var(--md-elevation-level-2);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 1rem 2rem;
+    background: var(--md-sys-color-primary);
+    color: #000000;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn .material-icons {
+    font-size: 20px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--md-elevation-level-2);
+}
+
+.btn.active {
+    background: #8B4513;
+    color: #ffffff;
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.api-section {
+    padding: 4rem 2rem;
+    background: var(--md-sys-color-surface);
+}
+
+.api-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.api-card {
+    background: var(--md-sys-color-surface-variant);
+    padding: 2rem;
+    border-radius: 24px;
+    box-shadow: var(--md-elevation-level-1);
+    transition: all 0.3s ease;
+}
+
+.api-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--md-elevation-level-2);
+}
+
+.status-indicator {
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
+}
+
+</style>
+</head>
+<body>
+    <div class="hero">
+        <h1>🎃 Halloween Spooky Overlay</h1>
+        <p>Spooky Halloween effects with falling pumpkins, swooping bats, floating ghosts, drifting leaves, crawling spiders, fog, and lightning flashes</p>
+        
+        <div class="controls">
+            <button id="toggleHalloween" class="btn">
+                <i class="material-icons">pest_control</i>
+                <span>Enable Halloween Effects</span>
+            </button>
+        </div>
+
+        <div class="status-indicator" id="statusIndicator">
+            Click the button above to see the spooky effects!
+        </div>
+
+        <div class="controls">
+            <a href="index.html" class="btn">
+                <i class="material-icons">home</i>
+                Back to Home
+            </a>
+            <a href="https://github.com/DaDevMikey/The-Holiday-Library" class="btn">
+                <i class="material-icons">code</i>
+                View on GitHub
+            </a>
+        </div>
+    </div>
+
+    <section class="demo-section">
+        <div class="container">
+            <h2>Quick Start</h2>
+            <div class="code-block">
+<code>// Add to your HTML
+&lt;script src="https://dadevmikey.github.io/The-Holiday-Library/HalloweenOverlay.js"&gt;&lt;/script&gt;
+
+// Initialize and start Halloween effects
+const halloween = new HalloweenOverlay();
+halloween.startAnimation();
+
+// Or customize it
+const halloween = new HalloweenOverlay({
+    pumpkinCount: 8,
+    batCount: 12,
+    ghostCount: 10,
+    leafCount: 20,
+    spiderCount: 5,
+    enableLightning: true,
+    enableFog: true,
+    enableSpiders: true,
+    pumpkinColors: ['#FF6B1A', '#FF8C00', '#FFA500'],
+    batColors: ['#000000', '#1a0033', '#2d0066']
+});
+halloween.startAnimation();
+
+// Stop Halloween effects
+halloween.stopAnimation();</code>
+            </div>
+        </div>
+    </section>
+
+    <section class="api-section">
+        <div class="container">
+            <h2>API Options</h2>
+            <div class="api-grid">
+                <div class="api-card">
+                    <h3>Basic Usage</h3>
+                    <div class="code-block">
+<code>const hw = new HalloweenOverlay();
+hw.startAnimation();
+hw.stopAnimation();
+hw.toggle();</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Element Counts</h3>
+                    <div class="code-block">
+<code>new HalloweenOverlay({
+    pumpkinCount: 8,
+    batCount: 12,
+    ghostCount: 10,
+    leafCount: 20,
+    spiderCount: 5
+});</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Color Customization</h3>
+                    <div class="code-block">
+<code>new HalloweenOverlay({
+    pumpkinColors: ['#FF6B1A', '#FF8C00'],
+    batColors: ['#000000', '#1a0033'],
+    ghostColors: ['rgba(255,255,255,0.8)'],
+    leafColors: ['#8B4513', '#FF8C00']
+});</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Effect Toggles</h3>
+                    <div class="code-block">
+<code>new HalloweenOverlay({
+    enableLightning: true,
+    enableFog: true,
+    enableSpiders: true
+});</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Animation Speeds</h3>
+                    <div class="code-block">
+<code>new HalloweenOverlay({
+    pumpkinSpeed: { min: 1, max: 3 },
+    batSpeed: { min: 2, max: 5 },
+    ghostSpeed: { min: 0.5, max: 1.5 },
+    leafSpeed: { min: 1, max: 3 }
+});</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Lightning Settings</h3>
+                    <div class="code-block">
+<code>new HalloweenOverlay({
+    enableLightning: true,
+    lightningInterval: { 
+        min: 8000, 
+        max: 20000 
+    },
+    lightningDuration: 150
+});</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Time-Based Scheduling</h3>
+                    <div class="code-block">
+<code>const hw = new HalloweenOverlay({
+    startTime: '18:00',
+    endTime: '23:59'
+});
+hw.startAnimation();</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Date-Based Scheduling</h3>
+                    <div class="code-block">
+<code>new HalloweenOverlay({
+    dateStart: '10-25',  // Oct 25
+    dateEnd: '11-01'     // Nov 1
+});</code>
+                    </div>
+                </div>
+                <div class="api-card">
+                    <h3>Auto-Stop Timeout</h3>
+                    <div class="code-block">
+<code>new HalloweenOverlay({
+    timeout: 60000 // 60 seconds
+});</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Load the overlay script locally -->
+    <script src="HalloweenOverlay.js"></script>
+
+    <script>
+        let halloweenInstance = null;
+        let halloweenActive = false;
+
+        // Halloween toggle
+        document.getElementById('toggleHalloween').addEventListener('click', function() {
+            if (!halloweenInstance) {
+                halloweenInstance = new HalloweenOverlay({
+                    pumpkinCount: 5,
+                    batCount: 8,
+                    ghostCount: 6,
+                    leafCount: 15,
+                    spiderCount: 3,
+                    enableLightning: true,
+                    enableFog: true,
+                    enableSpiders: true,
+                    zIndex: 9999
+                });
+            }
+            
+            if (halloweenActive) {
+                halloweenInstance.stopAnimation();
+                this.querySelector('span').textContent = 'Enable Halloween Effects';
+                this.classList.remove('active');
+                halloweenActive = false;
+                document.getElementById('statusIndicator').textContent = 'Click the button above to see the spooky effects!';
+            } else {
+                halloweenInstance.startAnimation();
+                this.querySelector('span').textContent = 'Disable Halloween Effects';
+                this.classList.add('active');
+                halloweenActive = true;
+                document.getElementById('statusIndicator').textContent = '🎃👻🦇 Spooky effects are active!';
+            }
+        });
+    </script>
+</body>
+</html>
